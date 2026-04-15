@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Zadanie 2</title>
+    <style>
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Rejestracja</h2>
+
+    <label>Login: <input type="text" id="user"></label>
+    <label>Email: <input type="email" id="email"></label>
+    <label>Hasło: <input type="password" id="pass1"></label>
+    <label>Powtórz hasło: <input type="password" id="pass2"></label>
+    <label>Data urodzenia: <input type="date" id="birth"></label>
+
+    <label>
+        Płeć:
+        <select id="gender">
+            <option value="">Wybierz</option>
+            <option>Mężczyzna</option>
+            <option>Kobieta</option>
+            <option>Nie chce podawac</option>
+        </select>
+    </label>
+
+    <label><input type="checkbox" id="rules"> Akceptuję regulamin</label>
+
+    <label><input type="radio" name="ver" value="Darmowa"> Darmowa</label>
+    <label><input type="radio" name="ver" value="Stardatowa"> Stardatowa</label>
+    <label><input type="radio" name="ver" value="Premium"> Premium</label>
+
+    <button id="btn">Zarejestruj</button>
+    <button id="bn">Wyczyść</button>
+     
+
+    <div id="msg"></div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

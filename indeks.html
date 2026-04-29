@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>Gra w klikanie</title>
+</head>
+
+<body>
+
+<h1 id="wynik">0</h1>
+
+<button id="przycisk">Kliknij mnie!</button>
+<button id="ulepszenie1">Kup +1 klik (10)</button>
+<button id="ulepszenie2">Kup auto +1/s (20)</button>
+
+<script>
+var wynik_label = document.getElementById("wynik");
+var przycisk = document.getElementById("przycisk");
+var ulepszenie1 = document.getElementById("ulepszenie1");
+var ulepszenie2 = document.getElementById("ulepszenie2");
+
+function aktualizujStrone()
+{
+    let wynik = localStorage.getItem("wynik");
+    let moc = localStorage.getItem("moc");
+    let auto = localStorage.getItem("auto");
+
+    wynik_label.innerHTML = wynik;
+
+    ulepszenie1.innerHTML =
+    "Kup +" + moc + " klik (" + localStorage.getItem("koszt1") + ")";
+
+    ulepszenie2.innerHTML =
+    "Kup auto +" + auto + "/s (" + localStorage.getItem("koszt2") + ")";
+}
+
+function dodajPunkty(pkt)
+{
+    let wynik = parseInt(localStorage.getItem("wynik"));
+    localStorage.setItem("wynik", wynik + pkt);
+    aktualizujStrone();
+}
+
+window.onload = () =>
+{
+    if(!localStorage.getItem("wynik"))
+    {
+        localStorage.setItem("wynik", 0);
+    }
+
+    if(!localStorage.getItem("moc"))
+    {
+        localStorage.setItem("moc", 1);
+    }
+
+    if(!localStorage.getItem("auto"))
+    {
+        localStorage.setItem("auto", 1);
+    }
+
+    if(!localStorage.getItem("koszt1"))
+    {
+        localStorage.setItem("koszt1", 10);
+    }
+
+    if(!localStorage.getItem("koszt2"))
+    {
+        localStorage.setItem("koszt2", 20);
+    }
+
+    let czas = localStorage.getItem("czas");
+
+    if(czas)
+    {
+        let teraz = Date.now();
+        let sekundy = Math.floor((teraz - parseInt(czas)) / 1000);
+        let auto = parseInt(localStorage.getItem("auto"));
+
+        dodajPunkty(sekundy * auto);
+    }
+
+    aktualizujStrone();
+}
+
+przycisk.onclick = () =>
+{
+    let moc = parseInt(localStorage.getItem("moc"));
+    dodajPunkty(moc);
+}
+
+ulepszenie1.onclick = () =>
+{
+    let wynik = parseInt(localStorage.getItem("wynik"));
+    let moc = parseInt(localStorage.getItem("moc"));
+    let koszt1 = parseInt(localStorage.getItem("koszt1"));
+
+    if(wynik >= koszt1)
+    {
+        wynik = wynik - koszt1;
+        moc = moc + 1;
+        koszt1 = koszt1 + 10;
+
+        localStorage.setItem("wynik", wynik);
+        localStorage.setItem("moc", moc);
+        localStorage.setItem("koszt1", koszt1);
+
+        aktualizujStrone();
+    }
+}
+
+ulepszenie2.onclick = () =>
+{
+    let wynik = parseInt(localStorage.getItem("wynik"));
+    let auto = parseInt(localStorage.getItem("auto"));
+    let koszt2 = parseInt(localStorage.getItem("koszt2"));
+
+    if(wynik >= koszt2)
+    {
+        wynik = wynik - koszt2;
+        auto = auto + 1;
+        koszt2 = koszt2 + 20;
+
+        localStorage.setItem("wynik", wynik);
+        localStorage.setItem("auto", auto);
+        localStorage.setItem("koszt2", koszt2);
+
+        aktualizujStrone();
+    }
+}
+
+setInterval(() =>
+{
+    let auto = parseInt(localStorage.getItem("auto"));
+    dodajPunkty(auto);
+},1000);
+
+window.onbeforeunload = () =>
+{
+    localStorage.setItem("czas", Date.now());
+}
+</script>
+
+</body>
+</html>
